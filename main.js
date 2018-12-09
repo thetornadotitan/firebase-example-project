@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     const messagesRef = database.ref('messages');
 
     const messagesConsole = document.getElementById('messagesConsole');
+    const messagesConsoleContainer = document.getElementById('messagesConsoleContainer');
     const messageText = document.getElementById('messageText');
     const messageButton = document.getElementById('messageBtn');
 
@@ -27,11 +28,15 @@ document.addEventListener("DOMContentLoaded", (e) => {
             let k = keys[i];
             let name = messages[k].name;
             let message = messages[k].message;
-            messagesConsole.innerHTML += `
-                <div>${name} :<br />${message}</div>
-            `;
-            console.log(name, message)
+            let messagediv = document.createElement("div");
+            messagediv.className = "messagesConsolemessage";
+            messagediv.appendChild(document.createTextNode(`${name} :`));
+            messagediv.appendChild(document.createElement("br"));
+            messagediv.appendChild(document.createTextNode(`${message}`));
+            messagediv.appendChild(document.createElement("hr"));
+            messagesConsole.appendChild(messagediv);
         }
+        messagesConsoleContainer.scrollTop = messagesConsoleContainer.scrollHeight;
     });
 
     messageButton.onclick = (e) => {
@@ -51,6 +56,22 @@ document.addEventListener("DOMContentLoaded", (e) => {
     InitApp();
 
 });
+
+// Use the browser's built-in functionality to quickly and safely escape
+// the string
+function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+}
+
+// UNSAFE with unsafe strings; only use on previously-escaped ones!
+function unescapeHtml(escapedStr) {
+    var div = document.createElement('div');
+    div.innerHTML = escapedStr;
+    var child = div.childNodes[0];
+    return child ? child.nodeValue : '';
+}
 
 function InitApp() {
     firebase.auth().onAuthStateChanged(function (user) {
