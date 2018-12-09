@@ -14,13 +14,14 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
     const database = firebase.database();
     const messagesRef = database.ref('messages');
+    const messagesRefLimited = messagesRef.limitToLast(10)
 
     const messagesConsole = document.getElementById('messagesConsole');
     const messagesConsoleContainer = document.getElementById('messagesConsoleContainer');
     const messageText = document.getElementById('messageText');
     const messageButton = document.getElementById('messageBtn');
 
-    messagesRef.on('value', (snapshot) => {
+    messagesRefLimited.on('value', (snapshot) => {
         messagesConsole.innerHTML = '';
         const messages = snapshot.val();
         const keys = Object.keys(messages);
@@ -42,6 +43,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     messageButton.onclick = (e) => {
         if (messageText.value != null && messageText.value != '') {
             messagesRef.push({ "name": firebase.auth().currentUser.displayName + "", "message": messageText.value + "" });
+            messageText.value = '';
         }
     }
 
