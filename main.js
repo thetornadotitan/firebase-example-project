@@ -13,13 +13,11 @@ document.addEventListener("DOMContentLoaded", (e) => {
     firebase.initializeApp(config);
 
     const database = firebase.database();
-
     const messagesRef = database.ref('messages');
 
     const messagesConsole = document.getElementById('messagesConsole');
-
-    const messagesConsoleContainer = document.getElementById('messagesConsoleContainer');
-
+    const messageText = document.getElementById('messageText');
+    const messageButton = document.getElementById('messageBtn');
 
     messagesRef.on('value', (snapshot) => {
         messagesConsole.innerHTML = '';
@@ -30,17 +28,23 @@ document.addEventListener("DOMContentLoaded", (e) => {
             let name = messages[k].name;
             let message = messages[k].message;
             messagesConsole.innerHTML += `
-                <div class='messagesConsolemessage'>${name} :<br />${message}</div>
-                <hr />
+                <div>${name} :<br />${message}</div>
             `;
-            messagesConsoleContainer.scrollTop = messagesConsoleContainer.scrollHeight;
+            console.log(name, message)
         }
     });
 
-    document.getElementById('messageBtn').onclick = (e) => {
-        const messageText = document.getElementById('messageText')
+    messageButton.onclick = (e) => {
         if (messageText.value != null && messageText.value != '') {
             messagesRef.push({ "name": firebase.auth().currentUser.displayName + "", "message": messageText.value + "" });
+        }
+    }
+
+    messageText.onkeydown = (e) => {
+        if (e.key == 'Enter') {
+            if (typeof messageButton.onclick == "function") {
+                messageButton.onclick.apply();
+            }
         }
     }
 
