@@ -13,8 +13,8 @@
     width: 0 !important 
 }
 
-#messagesConsole{
-    
+.messagesConsolemessage{
+    margin-bottom: 5px;
 }
 
 .account-details-item{

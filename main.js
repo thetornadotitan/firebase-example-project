@@ -18,6 +18,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
     const messagesConsole = document.getElementById('messagesConsole');
 
+    const messagesConsoleContainer = document.getElementById('messagesConsoleContainer');
+
+
     messagesRef.on('value', (snapshot) => {
         messagesConsole.innerHTML = '';
         const messages = snapshot.val();
@@ -27,9 +30,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
             let name = messages[k].name;
             let message = messages[k].message;
             messagesConsole.innerHTML += `
-                <div>${name} :<br />${message}</div>
+                <div class='messagesConsolemessage'>${name} :<br />${message}</div>
+                <hr />
             `;
-            console.log(name, message)
+            messagesConsoleContainer.scrollTop = messagesConsoleContainer.scrollHeight;
         }
     });
 
