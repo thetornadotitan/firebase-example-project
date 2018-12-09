@@ -1,0 +1,28 @@
+#account-details{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+#messagesConsoleContainer{
+    max-height: 500px;
+    overflow-x: auto;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+}#messagesConsoleContainer::-webkit-scrollbar { 
+    width: 0 !important 
+}
+
+#messagesConsole{
+    
+}
+
+.account-details-item{
+    margin: 10px;
+}
+
+.message-input-field{
+    display: grid;
+    grid-template-columns: auto 75px;
+    grid-column-gap: 10px;
+}
